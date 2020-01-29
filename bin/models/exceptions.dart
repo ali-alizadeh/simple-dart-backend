@@ -1,0 +1,3 @@
+class InvaildChannelException {
+  const InvaildChannelException();
+}

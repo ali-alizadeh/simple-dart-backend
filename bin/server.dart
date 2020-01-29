@@ -1,34 +1,49 @@
 import 'dart:io';
 
-import 'package:args/args.dart';
-import 'package:shelf/shelf.dart' as shelf;
-import 'package:shelf/shelf_io.dart' as io;
+import 'database.dart';
 
-// For Google Cloud Run, set _hostname to '0.0.0.0'.
-const _hostname = 'localhost';
-
-main(List<String> args) async {
-  var parser = ArgParser()..addOption('port', abbr: 'p');
-  var result = parser.parse(args);
-
-  // For Google Cloud Run, we respect the PORT environment variable
-  var portStr = result['port'] ?? Platform.environment['PORT'] ?? '8080';
-  var port = int.tryParse(portStr);
-
-  if (port == null) {
-    stdout.writeln('Could not parse port value "$portStr" into a number.');
-    // 64: command line usage error
-    exitCode = 64;
-    return;
+Future<void> main() async {
+  Database();
+  final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 8080);
+  print('Server is running on localhost:${server.port}');
+  await for (HttpRequest req in server) {
+    await handleRequest(req);
   }
-
-  var handler = const shelf.Pipeline()
-      .addMiddleware(shelf.logRequests())
-      .addHandler(_echoRequest);
-
-  var server = await io.serve(handler, _hostname, port);
-  print('Serving at http://${server.address.host}:${server.port}');
 }
 
-shelf.Response _echoRequest(shelf.Request request) =>
-    shelf.Response.ok('Request for "${request.url}"');
+void handleRequest(HttpRequest req) {
+  if (req.method == 'GET') {
+    handleGet(req);
+  } else {
+    handlePost(req);
+  }
+}
+
+void handleGet(HttpRequest req) {
+  if (req.uri.hasQuery) {
+    req.response.write('Hiiiiiiiiiiiiii');
+    req.response.close();
+  } else {
+    final file = File(Directory.current.path + '/media' + req.uri.toString());
+    if (file.existsSync()) {
+      req.response.addStream(file.openRead()).then((_) {
+        print(Directory.current.path + '/media' + req.uri.toString());
+        req.response.close();
+      });
+    }
+  }
+}
+
+void handlePost(HttpRequest req) {
+  //
+}
+
+// TODO: serach more to see if it is needed
+String join(String part1, String part2) {
+  var res = part1 + part2;
+  if (Platform.isWindows) {
+    return res.replaceAll('/', '\\');
+  } else {
+    return res.replaceAll('\\', '/');
+  }
+}
