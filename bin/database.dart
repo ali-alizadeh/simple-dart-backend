@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'models/models.dart';
-import 'models/shows/movie.dart';
 
 class Database {
   static Database _instance;
@@ -14,8 +13,8 @@ class Database {
   static File get _PEOPLE_DB => File('$_DB_DIR_PATH/$_PEOPLE_DB_PATH');
   static Directory get _DB_DIR => Directory(_DB_DIR_PATH);
 
-  final shows = Tree<Show>();
-  final people = Tree<Person>();
+  final shows = AvlTree<Show>();
+  final people = AvlTree<Person>();
 
   factory Database() => _instance ?? (_instance = Database._());
 
@@ -51,10 +50,7 @@ class Database {
             .cast<Map<String, dynamic>>();
 
     for (Map show in shows) {
-      Show newShow;
-      if (show['type'] == 'Movie') {
-        this.shows.insert(Movie.fromJson(show));
-      }
+      this.shows.insert(ShowFactory.fromJson(show));
     }
 
     for (Map person in people) {
@@ -64,20 +60,14 @@ class Database {
 
   void updateShowsDatabase() {
     final shows = <Show>[];
-    this.shows.depthFirstTraversal(
-          DepthFirstTraversalOrder.preOrder,
-          shows.add,
-        );
+    this.shows.preOrder(shows.add);
     final showsJson = shows.map((Show show) => show.toJson()).toList();
     _SHOWS_DB.writeAsStringSync(jsonEncode({'shows': showsJson}));
   }
 
   void updatePeopleDatabase() {
     final people = <Person>[];
-    this.people.depthFirstTraversal(
-          DepthFirstTraversalOrder.preOrder,
-          people.add,
-        );
+    this.people.preOrder(people.add);
     final peopleJson = people.map((Person person) => person.toJson()).toList();
     _PEOPLE_DB.writeAsStringSync(jsonEncode({'people': peopleJson}));
   }

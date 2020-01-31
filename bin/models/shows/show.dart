@@ -31,8 +31,9 @@ abstract class Show {
         name = json['name'],
         productionDate = DateTime.parse(json['productionDate']),
         broadcastInfo = (json['broadcastInfo'] as List)
-            .map((info) => BroadcastInfo.fromJson(info))
-            .toList(),
+                ?.map((info) => BroadcastInfo.fromJson(info))
+                ?.toList() ??
+            [],
         producers = json['producers'].cast<int>();
 
   Show copyWith({

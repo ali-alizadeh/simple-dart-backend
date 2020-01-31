@@ -1,14 +1,12 @@
 import 'package:meta/meta.dart';
 
 class Person {
-  final int id;
   final String name;
   final String phone;
   final DateTime birthday;
-  final String nationalID;
+  final int nationalID;
 
   const Person({
-    @required this.id,
     @required this.name,
     @required this.phone,
     @required this.birthday,
@@ -16,21 +14,27 @@ class Person {
   });
 
   Person.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
+      : name = json['name'],
         phone = json['phone'],
         birthday = DateTime.parse(json['birthday']),
         nationalID = json['nationalID'];
 
+  factory Person.fromNantionalId(int id) {
+    return Person(
+      name: null,
+      phone: null,
+      birthday: null,
+      nationalID: id,
+    );
+  }
+
   Person copyWith({
-    int id,
     String name,
     String phone,
     DateTime birthday,
     String nationalID,
   }) {
     return Person(
-      id: id ?? this.id,
       name: name ?? this.name,
       phone: phone ?? this.phone,
       birthday: birthday ?? this.birthday,
@@ -38,15 +42,14 @@ class Person {
     );
   }
 
-  bool operator >(Person other) => id > other.id;
+  bool operator >(Person other) => nationalID > other.nationalID;
 
-  bool operator <(Person other) => id < other.id;
+  bool operator <(Person other) => nationalID < other.nationalID;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'name': name,
         'phone': phone,
-        'birthday': birthday,
+        'birthday': birthday.toIso8601String(),
         'nationalID': nationalID,
       };
 }
