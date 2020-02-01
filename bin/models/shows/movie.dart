@@ -3,7 +3,6 @@ import 'package:meta/meta.dart';
 import '../models.dart';
 
 class Movie extends Show {
-  final int director;
   final int scriptSupervisor;
   final List<int> actors;
   final List<int> stuntMen;
@@ -14,24 +13,36 @@ class Movie extends Show {
     @required DateTime productionDate,
     @required List<BroadcastInfo> broadcastInfo,
     @required List<int> producers,
-    @required this.director,
+    @required int director,
     @required this.scriptSupervisor,
     @required this.actors,
     this.stuntMen,
   }) : super(
-          id: id,
-          name: name,
-          productionDate: productionDate,
-          broadcastInfo: broadcastInfo,
-          producers: producers,
-        );
+            id: id,
+            name: name,
+            productionDate: productionDate,
+            broadcastInfo: broadcastInfo,
+            producers: producers,
+            director: director);
 
   Movie.fromJson(Map<String, dynamic> json)
-      : director = json['director'],
-        scriptSupervisor = json['scriptSupervisor'],
+      : scriptSupervisor = json['scriptSupervisor'],
         actors = json['actors'].cast<int>(),
         stuntMen = json['stuntMen'].cast<int>(),
         super.fromJson(json);
+
+  Movie.fromId(int id)
+      : this(
+          id: id,
+          name: null,
+          productionDate: null,
+          broadcastInfo: null,
+          producers: null,
+          director: null,
+          scriptSupervisor: null,
+          actors: null,
+          stuntMen: null,
+        );
 
   @override
   Movie copyWith({
@@ -62,7 +73,6 @@ class Movie extends Show {
   Map<String, dynamic> toJson() {
     return super.toJson()
       ..addAll({
-        'director': director,
         'scriptSupervisor': scriptSupervisor,
         'actors': actors,
         'stuntMen': stuntMen,

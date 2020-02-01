@@ -8,6 +8,7 @@ abstract class Show {
   final DateTime productionDate;
   final List<BroadcastInfo> broadcastInfo;
   final List<int> producers;
+  final int director;
 
   DateTime get firstBroadcastDate {
     if (broadcastInfo.isEmpty) return null;
@@ -24,6 +25,7 @@ abstract class Show {
     @required this.productionDate,
     @required this.broadcastInfo,
     @required this.producers,
+    @required this.director,
   });
 
   Show.fromJson(Map<String, dynamic> json)
@@ -34,7 +36,8 @@ abstract class Show {
                 ?.map((info) => BroadcastInfo.fromJson(info))
                 ?.toList() ??
             [],
-        producers = json['producers'].cast<int>();
+        producers = json['producers'].cast<int>(),
+        director = json['director'];
 
   Show copyWith({
     int id,
@@ -42,6 +45,7 @@ abstract class Show {
     DateTime productionDate,
     List<BroadcastInfo> broadcastInfo,
     List<int> producers,
+    int director,
   });
 
   bool operator >(Show other) => id > other.id;
@@ -52,8 +56,9 @@ abstract class Show {
         'id': id,
         'name': name,
         'productionDate': productionDate.toIso8601String(),
-        'broadcastInfo': broadcastInfo.map((info) => info.toJson).toList(),
+        'broadcastInfo': broadcastInfo.map((info) => info.toJson()).toList(),
         'producers': producers,
+        'director': director,
         'type': type,
       };
 }
