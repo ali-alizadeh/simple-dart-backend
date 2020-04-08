@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "6b35ff8b-af80-4911-b99b-66ad123ef31e",
+		"name": "DataStructuresFinal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Additional",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "1. New show",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"match\",\r\n    \"name\": \"Mattchhhhh\",\r\n    \"productionDate\": \"2020-02-29 14:36\",\r\n    \"producers\": [91237748, 91239937987],\r\n    \"director\": 91239937987,\r\n    \"scriptSupervisor\": 91237748,\r\n    \"actors\": [91237748],\r\n    \"stuntMen\": [],\r\n    \"hosts\": [],\r\n    \"matchParticipants\": []\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE}}/show",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"show"
+					]
+				},
+				"description": "This endpoint requires these fields:\r\n```\r\nString type;\r\nString name;\r\nDateTime productionDate;\r\nList<Person> producers;\r\nPerson director;\r\n```\r\nand according to its type it can have some of these fields:\r\n```\r\nPerson scriptSupervisor\r\nList<Person> actors\r\nList<Person> stuntMen\r\nList<Person> hosts\r\nList<Person> matchParticipants\r\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "1.1. New person",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \t\"name\": \"Jack Dawson 222222222222\",\r\n   \t\"phone\": \"0915123478787\",\r\n    \"birthday\": \"1950-06-23\",\r\n    \"nationalID\": 91239937987\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE}}/person",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Delete a show by code",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{BASE}}/show?id=1580513233167169",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"show"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1580513233167169"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Edit a show by code",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": 1580513228886758,\r\n    \"type\": \"movie\",\r\n    \"name\": \"The Lord of the Rigns\",\r\n    \"productionDate\": \"2020-01-29 14:36\",\r\n    \"producers\": [91237748],\r\n    \"director\": 91237748,\r\n    \"scriptSupervisor\": 91237748,\r\n    \"actors\": [91237748],\r\n    \"stuntMen\": [],\r\n    \"hosts\": [],\r\n    \"matchParticipants\": []\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE}}/show",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"show"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Search for a show by code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/show?id=1580513228886758",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"show"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1580513228886758"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. New broadcast",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1580513234568328,\n\t\"broadcastInfo\": {\n\t\t\"broadcastDate\": \"2021-01-29T14:36:00.000\",\n\t\t\"channel\": \"one\"\n\t}\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE}}/newBroadcast",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"newBroadcast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Set firstBroadcastDate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1580513234568328,\n\t\"broadcastInfo\": {\n\t\t\"broadcastDate\": \"2021-01-29T14:36:00.000\",\n\t\t\"channel\": \"three\"\n\t}\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE}}/firstBroadcast",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"firstBroadcast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Get all shows sorted by code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/shows?sort=id",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"shows"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Get all shows by broadcast date",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/shows?sort=broadcastDate&broadcastDate",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"shows"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "broadcastDate"
+						},
+						{
+							"key": "broadcastDate",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Get all shows of a channel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/shows?sort=channel&channel=three",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"shows"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "channel"
+						},
+						{
+							"key": "channel",
+							"value": "three"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. Get all shows of a director",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/shows?sort=director&directorId",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"shows"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "director"
+						},
+						{
+							"key": "directorId",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11. Get all shows with n repeats at least",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/shows?sort=repeatTimes&repeatTimes=0",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"shows"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "repeatTimes"
+						},
+						{
+							"key": "repeatTimes",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
